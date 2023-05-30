@@ -1,0 +1,58 @@
+[tool.poetry]
+name = "kami-sales-dashboard"
+version = "0.1.0"
+description = ""
+authors = ["Maicon de Menezes <maicon@kamico.com.br>"]
+readme = "README.md"
+packages = [{include = "kami_sales_dashboard"}]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+dash = "^2.9.3"
+plotly = "^5.14.1"
+pandas = "^2.0.1"
+openpyxl = "^3.1.2"
+nbformat = "^5.8.0"
+ipykernel = "^6.23.1"
+dash-bootstrap-components = "^1.4.1"
+dash-bootstrap-templates = "^1.0.8"
+pymysql = "^1.0.3"
+sqlalchemy = "^2.0.15"
+python-dotenv = "^1.0.0"
+pydantic = "^1.10.8"
+kami-logging = "^0.2.1"
+asyncmy = "^0.2.7"
+dash-labs = "^1.2.0"
+numerize = "^0.12"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.3.1"
+pytest-cov = "^4.0.0"
+blue = "^0.9.1"
+isort = "^5.12.0"
+taskipy = "^1.11.0"
+pytest-sugar = "^0.9.7"
+ipython = "^8.13.2"
+ipykernel = "^6.23.1"
+notebook = "^6.5.4"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+pythonpath = "."
+addopts = "--doctest-modules"
+
+[tool.isort]
+profile = "black"
+line_length = 79
+
+[tool.taskipy.tasks]
+lint-review = "blue --check --diff . && isort --check --diff ."
+lint-fix = "blue . && isort ."
+pre_test = "task lint-review"
+test = "pytest -s -x --cov=kami_messenger -vv -rs"
+post_test = "coverage html"
+docs = "mkdocs serve"
